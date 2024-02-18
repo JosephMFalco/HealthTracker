@@ -1,23 +1,31 @@
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class Health {
+public class DisplayDB {
 
-    private String bloodPressure;
-    private double weight;
-    private String date;
     private int userID;
     private Connection conn;
-    private PreparedStatement statement;
 
-    public Health(String bloodPressure, double weight, int userID, String date) {
+    public DisplayDB() {
 
-        this.bloodPressure = bloodPressure;
-        this.weight = weight;
+    }
+
+    public DisplayDB(int userID) {
+
         this.userID = userID;
-        this.date = date;
+
+    }
+
+    public void selectHealth() {
+
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        String bloodPressure;
+        double weight;
+        String date;
 
         try {
 
@@ -30,14 +38,20 @@ public class Health {
 
             conn = DriverManager.getConnection(url);
 
-            String query = "INSERT INTO HEALTH (UserID, date, bloodPressure, weight) VALUES (?, ?, ?, ?)";
-            statement = conn.prepareStatement(query);
+            String SELECT = "SELECT bloodPressure, weight, date FROM HEALTH WHERE userID = ?";
+            statement = conn.prepareStatement(SELECT);
             statement.setInt(1, userID);
-            statement.setString(2, date);
-            statement.setString(3, bloodPressure);
-            statement.setDouble(4, weight);
+            resultSet = statement.executeQuery();
 
-            statement.executeUpdate();
+            while (resultSet.next()) {
+
+                bloodPressure = resultSet.getString("bloodPressure");
+                weight = resultSet.getDouble("weight");
+                date = resultSet.getString("date");
+
+                System.out.println("Blood Pressure: " + bloodPressure + ", Weight: " + weight + ", Date: " + date);
+
+            }
 
         } catch (ClassNotFoundException | SQLException e) {
 
@@ -46,6 +60,9 @@ public class Health {
         } finally {
 
             try {
+                if (resultSet != null)
+                    resultSet.close();
+
                 if (statement != null)
                     statement.close();
 

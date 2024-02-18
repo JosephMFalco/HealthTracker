@@ -23,20 +23,20 @@ public class DB {
             Statement statement = conn.createStatement();
 
             String healthTable =
-                    "CREATE TABLE IF NOT EXISTS health (\n"
-                            + "ID INTEGER PRIMARY KEY, \n"
-                            + "userID INTEGER NOT NULL, \n"  // Added missing comma
+                    "CREATE TABLE IF NOT EXISTS HEALTH (\n"
+                            + "ID INTEGER PRIMARY KEY AUTOINCREMENT, \n"
+                            + "userID INTEGER NOT NULL, \n"
                             + "weight DOUBLE NULL, \n"
-                            + "bloodPressure TEXT NULL, \n"  // Added missing comma
+                            + "bloodPressure TEXT NULL, \n"
                             + "date DATE NULL, \n"
-                            + "FOREIGN KEY (userID) REFERENCES user(ID)\n"  // Corrected "TABEL" to "TABLE" and added missing semicolon
+                            + "FOREIGN KEY (userID) REFERENCES USER(ID)\n"
                             + ");";
 
             String userTable =
-                    "CREATE TABLE IF NOT EXISTS user (\n"
-                            + "ID INTEGER PRIMARY KEY, \n"
-                            + "firstName TEXT NULL, \n"
-                            + "lastName TEXT NULL\n"
+                    "CREATE TABLE IF NOT EXISTS USER ("
+                            + "ID INTEGER PRIMARY KEY AUTOINCREMENT,"
+                            + "firstName TEXT NULL,"
+                            + "lastName TEXT NULL"
                             + ");";
 
             System.out.println("Creating health and user tables...");

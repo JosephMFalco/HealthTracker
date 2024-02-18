@@ -3,21 +3,16 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class Health {
 
-    private String bloodPressure;
-    private double weight;
-    private String date;
-    private int userID;
+public class DeleteHealth {
+
+    private int healthID;
     private Connection conn;
     private PreparedStatement statement;
 
-    public Health(String bloodPressure, double weight, int userID, String date) {
+    public DeleteHealth(int ID) {
 
-        this.bloodPressure = bloodPressure;
-        this.weight = weight;
-        this.userID = userID;
-        this.date = date;
+        healthID = ID;
 
         try {
 
@@ -30,12 +25,9 @@ public class Health {
 
             conn = DriverManager.getConnection(url);
 
-            String query = "INSERT INTO HEALTH (UserID, date, bloodPressure, weight) VALUES (?, ?, ?, ?)";
+            String query = "DELETE FROM HEALTH WHERE ID = ?";
             statement = conn.prepareStatement(query);
-            statement.setInt(1, userID);
-            statement.setString(2, date);
-            statement.setString(3, bloodPressure);
-            statement.setDouble(4, weight);
+            statement.setInt(1, healthID);
 
             statement.executeUpdate();
 
@@ -60,4 +52,5 @@ public class Health {
         }
     }
 }
+
 
