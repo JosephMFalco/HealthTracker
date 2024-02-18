@@ -13,6 +13,7 @@ public class DB {
 
             Class.forName("org.sqlite.JDBC");
 
+            //How can I make this dynamic... how can I make this so that it can be different for other people?
             String directoryPath = "D:\\CodingProjects\\HealthTracker\\src\\",
                     dbFileName = "health.db",
                     fullpath = directoryPath + dbFileName,
@@ -36,7 +37,9 @@ public class DB {
                     "CREATE TABLE IF NOT EXISTS USER ("
                             + "ID INTEGER PRIMARY KEY AUTOINCREMENT,"
                             + "firstName TEXT NULL,"
-                            + "lastName TEXT NULL"
+                            + "lastName TEXT NULL,"
+                            + "userName TEXT NOT NULL,"
+                            + "password TEXT NOT NULL"
                             + ");";
 
             System.out.println("Creating health and user tables...");
